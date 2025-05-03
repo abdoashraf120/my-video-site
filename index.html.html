@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>فيديو رايق - تعليم تقني بسيط</title>
+  <meta name="description" content="شاهد الفيديو الرائع مع تحكم مميز وأزرار تشغيل وشرح مباشرة من الويب!">
+  <meta name="keywords" content="فيديو, YouTube, تشغيل, شرح, ترجمة, كتم, ملء الشاشة, HTML, GitHub Pages">
+  <meta name="author" content="abdoashraf120">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .video-container {
+      position: relative;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 450px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
+    .controls button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎥 فيديو تعليمي رايق!</h1>
+
+  <div class="video-container">
+    <iframe id="myVideo" src="https://www.youtube.com/embed/BHACKCNDMW8?enablejsapi=1" allowfullscreen></iframe>
+
+    <div class="controls">
+      <div class="left-controls">
+        <button onclick="togglePlay()">⏯️ تشغيل/إيقاف</button>
+        <button onclick="toggleMute()">🔇 كتم (M)</button>
+      </div>
+      <div class="right-controls">
+        <button onclick="toggleCaptions()">📝 شرح</button>
+        <button onclick="toggleFullscreen()">🔲 ملء الشاشة</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('myVideo');
+    }
+
+    function togglePlay() {
+      const state = player.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    }
+
+    function toggleMute() {
+      if (player.isMuted()) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
+    }
+
+    function toggleCaptions() {
+      player.setOption("captions", "track", { languageCode: "ar" });
+    }
+
+    function toggleFullscreen() {
+      const iframe = document.getElementById("myVideo");
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() === 'm') {
+        toggleMute();
+      }
+    });
+
+    // تحميل API الخاص بيوتيوب
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  </script>
+
+</body>
+</html>
